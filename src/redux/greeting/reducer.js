@@ -1,37 +1,31 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { fetchGreeting } from "./middleware";
+import { createSlice } from '@reduxjs/toolkit';
+import fetchGreeting from './middleware';
 
 const initialState = {
-  greeting: "",
+  greeting: '',
   error: null,
   isLoading: true,
 };
 
 const greetingSlice = createSlice({
-  name: "greeting",
+  name: 'greeting',
   initialState,
   extraReducers: (builder) => {
     builder
-      .addCase(fetchGreeting.pending, (state, {payload}) => {
-        return {
-            ...state,
-            isLoading: true
-        }
-      })
-      .addCase(fetchGreeting.fulfilled, (state, {payload}) => {
-        return {
-            ...state,
-            isLoading: false,
-            greeting : payload.text
-        }
-      })
-      .addCase(fetchGreeting.rejected, (state, {payload}) => {
-        return {
-            ...state,
-            isLoading: false,
-            error: payload
-        }
-      });
+      .addCase(fetchGreeting.pending, (state) => ({
+        ...state,
+        isLoading: true,
+      }))
+      .addCase(fetchGreeting.fulfilled, (state, { payload }) => ({
+        ...state,
+        isLoading: false,
+        greeting: payload.text,
+      }))
+      .addCase(fetchGreeting.rejected, (state, { payload }) => ({
+        ...state,
+        isLoading: false,
+        error: payload,
+      }));
   },
 });
 
